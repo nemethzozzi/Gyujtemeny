@@ -57,7 +57,10 @@ document.addEventListener("DOMContentLoaded", () => {
               <p class="card-text"><strong>Dátum:</strong> ${
                 collection.date
               }</p>
-              <button class="btn btn-primary add-item-btn mb-3" data-id="${
+              <button class="btn btn-secondary rename-collection-btn" data-id="${
+                collection.id
+              }">Átnevezés</button>
+              <button class="btn btn-primary add-item-btn" data-id="${
                 collection.id
               }">Új elem hozzáadása</button>
               <ul class="list-group item-list" data-id="${collection.id}">
@@ -100,6 +103,15 @@ document.addEventListener("DOMContentLoaded", () => {
           id: Date.now(),
           title: itemTitle,
         });
+        renderCollections();
+      }
+    } else if (e.target.classList.contains("rename-collection-btn")) {
+      // Handle renaming a collection
+      const collectionId = e.target.getAttribute("data-id");
+      const newCollectionTitle = prompt("Új gyűjtemény neve:");
+      if (newCollectionTitle) {
+        const collection = collections.find((c) => c.id == collectionId);
+        collection.title = newCollectionTitle;
         renderCollections();
       }
     } else if (e.target.classList.contains("rename-item")) {
